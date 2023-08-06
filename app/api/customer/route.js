@@ -1,25 +1,23 @@
 import connectMongoDB from "../../libs/mongodb";
 // import Topic from "@/models/topic";
-import Topic from "../../database/mongodbslimal";
+import Data from "../../database/mongodbslimal";
 import { NextResponse } from "next/server";
-
 export async function POST(request) {
-  console.log(request.body);
-  const { title, description } = await request.json();
+  const data= await request.json();
   await connectMongoDB();
-  await Topic.create({ title, description });
+  await Data.create({...data});
   return NextResponse.json({ message: "Topic Created" }, { status: 201 });
 }
 
 export async function GET() {
   await connectMongoDB();
-  const topics = await Topic.find();
-  return NextResponse.json({ topics });
+  const datas = await Data.find({});
+  return NextResponse.json({ datas });
 }
 
 export async function DELETE(request) {
   const id = request.nextUrl.searchParams.get("id");
   await connectMongoDB();
-  await Topic.findByIdAndDelete(id);
+  await Data.findByIdAndDelete(id);
   return NextResponse.json({ message: "Topic deleted" }, { status: 200 });
 }

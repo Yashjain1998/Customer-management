@@ -2,9 +2,7 @@
 import { BiPlus } from "react-icons/bi";
 import { useReducer } from "react";
 import { useRouter } from "next/navigation";
-
-
-function Form() {
+function Editform({id,data}) {
 
   function reducer(state,action){
     if(action.type=="change input"){
@@ -14,14 +12,7 @@ function Form() {
       }
     }
   }
-  const [state, dispatch] = useReducer(reducer, {
-    Name: "",
-    Email: "",
-    Mobile: "",
-    City:"",
-    Bill:"",
-    Date:"",
-  });
+  const [state, dispatch] = useReducer(reducer, {...data});
   function handlechange(e){
     dispatch({
       type:"change input",
@@ -30,24 +21,21 @@ function Form() {
     })
   }
   const router = useRouter();
-  async function addcustomer(e){
+  async function editcustomer(e){
     e.preventDefault();
     try {
-      const res=await fetch("https://localhost:3000/api/customer/",
-      {
+      fetch(`https://localhost:3000/api/customer/${id}`,{
         method: "POST",
         headers: {
-          'Content-type':"application/json",
+          "Content-type": "application/json",
         },
-        body: JSON.stringify(state),
+        body: JSON.stringify({...state}),
       });
-      console.log(res)
-      if (true) {
-        // router.push("/");
-        console.log("hi")
-      } else {
+      if (!res.ok) {
         throw new Error("Failed to create a topic");
       }
+      router.refresh();
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -56,7 +44,7 @@ function Form() {
     <div className="container mx-auto py-5">
       <form
         className="grid lg:grid-cols-1 w-4/6 gap-8"
-        onSubmit={addcustomer}
+        onSubmit={editcustomer}
       >
         <div className="input-type">
           <input
@@ -133,5 +121,5 @@ function Form() {
   );
 }
 
-export default Form;
+export default Editform;
 

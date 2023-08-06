@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const data = new Schema(
+const dataSchema = new Schema(
   {
     Name: {
       type: String,
@@ -31,7 +31,8 @@ const data = new Schema(
     timeseries: true,
   }
 );
+mongoose.models = {}
+const Data = mongoose.model.Customer || mongoose.model("Customer", dataSchema);
 
-const Topic = mongoose.model.Topic || mongoose.model("Topic", data);
 
-export default Topic;
+export default Data;
