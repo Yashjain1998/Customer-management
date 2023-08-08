@@ -15,24 +15,10 @@ async function getCustomer() {
     console.log("Error loading topics: ", error);
   }
 }
-// const datas = [
-//   { Name: "", Email: "", Mobile: "", City: "", Bill: "", Date: "" },
-// ];
-async function calledapi() {
-  try {
-    const data = await fetch("http://localhost:3000/api/customer", {
-      cache: "no-store",
-    });
-    const newdata = await data.json();
-    console.log(newdata.datas);
-  } catch (error) {
-    console.log(error);
-  }
-}
+
+
 export default async function Table() {
   const {datas} = await getCustomer();
-  // console.log(dat);
-  // await calledapi();
 
   return (
     <table className="min-w-full table-auto">

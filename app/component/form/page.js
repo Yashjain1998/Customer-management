@@ -31,20 +31,20 @@ function Form() {
   }
   const router = useRouter();
   async function addcustomer(e){
+    console.log("hi");
     e.preventDefault();
     try {
-      const res=await fetch("https://localhost:3000/api/customer/",
+      const res=await fetch("/api/customer/",
       {
         method: "POST",
         headers: {
-          'Content-type':"application/json",
+          "Content-type":"application/json",
         },
         body: JSON.stringify(state),
       });
       console.log(res)
-      if (true) {
-        // router.push("/");
-        console.log("hi")
+      if (res.ok) {
+        router.push("/");
       } else {
         throw new Error("Failed to create a topic");
       }
@@ -56,7 +56,9 @@ function Form() {
     <div className="container mx-auto py-5">
       <form
         className="grid lg:grid-cols-1 w-4/6 gap-8"
-        onSubmit={addcustomer}
+        onSubmit={(e)=>{
+          addcustomer(e);
+        }}
       >
         <div className="input-type">
           <input

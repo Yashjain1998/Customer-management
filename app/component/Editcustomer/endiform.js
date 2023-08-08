@@ -24,8 +24,8 @@ function Editform({id,data}) {
   async function editcustomer(e){
     e.preventDefault();
     try {
-      fetch(`https://localhost:3000/api/customer/${id}`,{
-        method: "POST",
+      fetch(`/api/customer/${id}`,{
+        method: "PUT",
         headers: {
           "Content-type": "application/json",
         },
@@ -33,9 +33,11 @@ function Editform({id,data}) {
       });
       if (!res.ok) {
         throw new Error("Failed to create a topic");
+      }else{
+        router.push("/");
       }
-      router.refresh();
-      router.push("/");
+      // router.refresh();
+      
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +46,7 @@ function Editform({id,data}) {
     <div className="container mx-auto py-5">
       <form
         className="grid lg:grid-cols-1 w-4/6 gap-8"
-        onSubmit={editcustomer}
+        onSubmit={(e)=>editcustomer(e)}
       >
         <div className="input-type">
           <input
